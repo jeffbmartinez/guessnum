@@ -16,14 +16,14 @@ const maxNumber = 100
 const maxGuesses = 8
 
 func main() {
-	showGreeting()
+	ShowGreeting()
 
-	secretNumber := generateSecretNumber()
+	secretNumber := GenerateSecretNumber(minNumber, maxNumber)
 
 	win := false
 
 	for guessesLeft := maxGuesses; guessesLeft > 0; guessesLeft-- {
-		userGuess := getGuess(guessesLeft)
+		userGuess := GetGuess(guessesLeft)
 
 		switch {
 		case userGuess == secretNumber:
@@ -47,23 +47,24 @@ func main() {
 	}
 }
 
-// showGreeting displays a friendly greeting to the user.
-func showGreeting() {
+// ShowGreeting displays a friendly greeting to the user.
+func ShowGreeting() {
 	fmt.Println("Welcome to Guess The Number Game!")
 	fmt.Println("Try your luck at guessing the correct number!")
 }
 
-// generateSecretNumber creates the secret number for the game.
-func generateSecretNumber(min int, max int) int {
+// GenerateSecretNumber creates the secret number for the game.
+func GenerateSecretNumber(min int, max int) int {
 	return rand.Int()%(max-min+1) + min
 }
 
 /*
-getGuess retrieves a user's guess from the command line. It allows up to
-three attempts to read an integer, then just forces the guess to be zero
-if the user can't type an integer.
+GetGuess retrieves a user's guess from the command line. If it's unable to
+read an integer from what the user types, it just pretends the user entered
+zero. But don't do that, it's a toy program that assumes good input. Weird
+things happen if you enter non integer input.
 */
-func getGuess(guessesLeft int) int {
+func GetGuess(guessesLeft int) int {
 	guessWord := "guesses"
 	if guessesLeft == 1 {
 		guessWord = "guess"
